@@ -1,3 +1,5 @@
+package spreadsheet;
+
 /**
  * Implementation wraps an existing Spreadsheet.
  * This class is using composition to reuse functionality from original sheet.

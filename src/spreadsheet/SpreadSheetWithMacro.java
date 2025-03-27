@@ -1,3 +1,5 @@
+package spreadsheet;
+
 /**
  * This interface extends the SpreadSheet interface to add support for macros.
  * It represents a spreadsheet that can execute macros.

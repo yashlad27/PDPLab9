@@ -1,3 +1,5 @@
+package spreadsheet;
+
 /**
  * This interface represents all the operations to be offered by a spreadsheet.
  * These operations are supposed to be a barebones set upon which other operations

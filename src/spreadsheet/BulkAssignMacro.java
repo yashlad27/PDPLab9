@@ -1,3 +1,5 @@
+package spreadsheet;
+
 /**
  * A macro that assigns a specific value to a range of cells in a spreadsheet.
  * This is using CommandDesignPattern.
