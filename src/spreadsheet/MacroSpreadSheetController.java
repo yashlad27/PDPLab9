@@ -35,6 +35,10 @@ public class MacroSpreadSheetController extends SpreadSheetController {
     int toRow;
     int toCol;
     double value;
+    int destRow;
+    int destCol;
+    double startValue;
+    double increment;
 
     switch (userInstruction) {
       case "bulk-assign-value":
@@ -55,6 +59,50 @@ public class MacroSpreadSheetController extends SpreadSheetController {
         }
         break;
 
+      case "average":
+        try {
+          fromRow = getRowNum(sc.next());
+          fromCol = sc.nextInt() - 1; // Convert to 0-indexed
+          toRow = getRowNum(sc.next());
+          toCol = sc.nextInt() - 1; // Convert to 0-indexed
+          destRow = getRowNum(sc.next());
+          destCol = sc.nextInt() - 1; // Convert to 0-indexed
+
+          writeMessage("Computing average of cells from (" + fromRow + "," + fromCol
+                  + ") to (" + toRow + "," + toCol
+                  + ") and storing in (" + destRow + "," + destCol + ")"
+                  + System.lineSeparator());
+
+          AverageMacro macro = new AverageMacro(fromRow, fromCol, toRow, toCol, destRow, destCol);
+          macroSheet.executeMacro(macro);
+        } catch (IllegalArgumentException e) {
+          writeMessage("Error: " + e.getMessage() + System.lineSeparator());
+        }
+        break;
+
+      case "range-assign":
+        try {
+          fromRow = getRowNum(sc.next());
+          fromCol = sc.nextInt() - 1; // Convert to 0-indexed
+          toRow = getRowNum(sc.next());
+          toCol = sc.nextInt() - 1; // Convert to 0-indexed
+          startValue = sc.nextDouble();
+          increment = sc.nextDouble();
+
+          writeMessage("Assigning range of values starting at " + startValue
+                  + " with increment " + increment
+                  + " to cells from (" + fromRow + "," + fromCol
+                  + ") to (" + toRow + "," + toCol + ")"
+                  + System.lineSeparator());
+
+          RangeAssignMacro macro = new RangeAssignMacro(fromRow, fromCol, toRow, toCol,
+                  startValue, increment);
+          macroSheet.executeMacro(macro);
+        } catch (IllegalArgumentException e) {
+          writeMessage("Error: " + e.getMessage() + System.lineSeparator());
+        }
+        break;
+
       default:
         // Delegate to parent class for other commands
         super.processCommand(userInstruction, sc, sheet);
@@ -66,6 +114,13 @@ public class MacroSpreadSheetController extends SpreadSheetController {
     writeMessage("Supported user instructions are: " + System.lineSeparator());
     writeMessage("bulk-assign-value from-row-num from-col-num to-row-num to-col-num value "
             + "(set a range of cells to a value)" + System.lineSeparator());
+    writeMessage("range-assign from-row-num from-col-num to-row-num to-col-num "
+            + "start-value increment "
+            + "(set a row or column of cells to a range of values starting at the given value "
+            + "and advancing by the increment)" + System.lineSeparator());
+    writeMessage("average from-row-num from-col-num to-row-num to-col-num dest-row-num dest-col-num "
+            + "(compute the average of a range of cells and put it at the given location)"
+            + System.lineSeparator());
     super.printMenu();
   }
 }
