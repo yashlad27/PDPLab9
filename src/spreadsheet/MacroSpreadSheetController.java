@@ -69,8 +69,7 @@ public class MacroSpreadSheetController extends SpreadSheetController {
           destCol = sc.nextInt() - 1; // Convert to 0-indexed
 
           writeMessage("Computing average of cells from (" + fromRow + "," + fromCol
-                  + ") to (" + toRow + "," + toCol
-                  + ") and storing in (" + destRow + "," + destCol + ")"
+                  + ") to (" + toRow + "," + toCol + ") and storing in (" + destRow + "," + destCol + ")"
                   + System.lineSeparator());
 
           AverageMacro macro = new AverageMacro(fromRow, fromCol, toRow, toCol, destRow, destCol);
@@ -89,14 +88,11 @@ public class MacroSpreadSheetController extends SpreadSheetController {
           startValue = sc.nextDouble();
           increment = sc.nextDouble();
 
-          writeMessage("Assigning range of values starting at " + startValue
-                  + " with increment " + increment
-                  + " to cells from (" + fromRow + "," + fromCol
-                  + ") to (" + toRow + "," + toCol + ")"
-                  + System.lineSeparator());
+          writeMessage("Setting cells from (" + fromRow + "," + fromCol
+                  + ") to (" + toRow + "," + toCol + ") starting at " + startValue
+                  + " with increment " + increment + System.lineSeparator());
 
-          RangeAssignMacro macro = new RangeAssignMacro(fromRow, fromCol, toRow, toCol,
-                  startValue, increment);
+          RangeAssignMacro macro = new RangeAssignMacro(fromRow, fromCol, toRow, toCol, startValue, increment);
           macroSheet.executeMacro(macro);
         } catch (IllegalArgumentException e) {
           writeMessage("Error: " + e.getMessage() + System.lineSeparator());
@@ -104,23 +100,21 @@ public class MacroSpreadSheetController extends SpreadSheetController {
         break;
 
       default:
-        // Delegate to parent class for other commands
         super.processCommand(userInstruction, sc, sheet);
     }
   }
 
   @Override
-  protected void printMenu() {
+  protected void printMenu() throws IllegalStateException {
     writeMessage("Supported user instructions are: " + System.lineSeparator());
-    writeMessage("bulk-assign-value from-row-num from-col-num to-row-num to-col-num value "
-            + "(set a range of cells to a value)" + System.lineSeparator());
-    writeMessage("range-assign from-row-num from-col-num to-row-num to-col-num "
-            + "start-value increment "
-            + "(set a row or column of cells to a range of values starting at the given value "
-            + "and advancing by the increment)" + System.lineSeparator());
-    writeMessage("average from-row-num from-col-num to-row-num to-col-num dest-row-num dest-col-num "
-            + "(compute the average of a range of cells and put it at the given location)"
+    writeMessage("bulk-assign-value from-row-num from-col-num to-row-num to-col-num value " +
+            "(set a range of cells to a value)" + System.lineSeparator());
+    writeMessage("Supported user instructions are: " + System.lineSeparator());
+    writeMessage("assign-value row-num col-num value (set a cell to a value)"
             + System.lineSeparator());
-    super.printMenu();
+    writeMessage("print-value row-num col-num (print the value at a given cell)"
+            + System.lineSeparator());
+    writeMessage("menu (Print supported instruction list)" + System.lineSeparator());
+    writeMessage("q or quit (quit the program) " + System.lineSeparator());
   }
 }
