@@ -3,7 +3,6 @@ import org.junit.Test;
 
 import java.util.Random;
 
-import spreadsheet.SpreadSheet;
 import spreadsheet.SparseSpreadSheet;
 
 import static org.junit.Assert.assertEquals;

@@ -1,5 +1,3 @@
-package spreadsheet;
-
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -71,7 +69,7 @@ public class SpreadSheetController {
 
   }
 
-  protected void processCommand(String userInstruction, Scanner sc,SpreadSheet sheet) {
+  protected void processCommand(String userInstruction, Scanner sc, SpreadSheet sheet) {
     int row;
     int col;
     double value;
