@@ -43,7 +43,6 @@ public class MacroSpreadSheetController extends SpreadSheetController {
       Scanner scanner = new Scanner(input);
 
       while (scanner.hasNextLine()) {
-        output.append("Type instruction: ");
         String command = scanner.nextLine().trim();
 
         if (command.isEmpty()) {
@@ -59,6 +58,7 @@ public class MacroSpreadSheetController extends SpreadSheetController {
           break;
         }
 
+        output.append("Type instruction: ");
         try {
           switch (commandLower) {
             case "assign-value":
@@ -112,14 +112,14 @@ public class MacroSpreadSheetController extends SpreadSheetController {
     output.append("Supported user instructions are:\n");
     output.append("  assign-value row-num col-num value (set a cell to a value)\n");
     output.append("  print-value row-num col-num (print the value at the given location)\n");
-    output.append("  bulk-assign-value from-row-num from-col-num to-row-num to-col-num value "
-            + "(set a range of cells to a value)\n");
+    output.append("  bulk-assign-value from-row-num from-col-num to-row-num "
+            + "to-col-num value (set a range of cells to a value)\n");
     output.append("  range-assign from-row-num from-col-num to-row-num "
-            + "to-col-num start-value increment"
-            + " (set a range of cells with incrementing values)\n");
+            + "to-col-num start-value increment (set a row or column of cells "
+            + "to a range of values starting at the given value and advancing by the increment)\n");
     output.append("  average from-row-num from-col-num to-row-num to-col-num "
-            + "dest-row-num dest-col-num"
-            + " (compute average of cells)\n");
+            + "dest-row-num dest-col-num (compute the average of a range of cells "
+            + "and put it at the given location)\n");
     output.append("  menu (show this menu)\n");
     output.append("  quit (exit the program)\n");
   }
