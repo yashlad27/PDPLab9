@@ -69,7 +69,8 @@ public class SpreadSheetController {
     this.farewellMessage();
   }
 
-  protected void processCommand(String userInstruction, Scanner sc, SpreadSheet sheet) throws IOException {
+  protected void processCommand(String userInstruction, Scanner sc, SpreadSheet sheet)
+          throws IOException {
     int row;
     int col;
     double value;

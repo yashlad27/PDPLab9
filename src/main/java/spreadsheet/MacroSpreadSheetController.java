@@ -1,7 +1,6 @@
 package spreadsheet;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.util.Scanner;
 
 /**
@@ -48,7 +47,7 @@ public class MacroSpreadSheetController extends SpreadSheetController {
       while (scanner.hasNextLine()) {
         output.append("Type instruction: ");
         String command = scanner.nextLine().trim();
-        
+
         if (command.isEmpty()) {
           continue;
         }
@@ -115,9 +114,12 @@ public class MacroSpreadSheetController extends SpreadSheetController {
     output.append("Supported user instructions are:\n");
     output.append("  assign-value ROW COL VALUE (set a cell to a value)\n");
     output.append("  print-value ROW COL (print the value at the given location)\n");
-    output.append("  bulk-assign-value FROM_ROW FROM_COL TO_ROW TO_COL VALUE (set a range of cells to a value)\n");
-    output.append("  range-assign FROM_ROW FROM_COL TO_ROW TO_COL START_VALUE INCREMENT (set a range of cells with incrementing values)\n");
-    output.append("  average FROM_ROW FROM_COL TO_ROW TO_COL DEST_ROW DEST_COL (compute average of cells)\n");
+    output.append("  bulk-assign-value FROM_ROW FROM_COL TO_ROW TO_COL "
+            + "VALUE (set a range of cells to a value)\n");
+    output.append("  range-assign FROM_ROW FROM_COL TO_ROW TO_COL START_VALUE INCREMENT"
+            + " (set a range of cells with incrementing values)\n");
+    output.append("  average FROM_ROW FROM_COL TO_ROW TO_COL DEST_ROW DEST_COL"
+            + " (compute average of cells)\n");
     output.append("  menu (show this menu)\n");
     output.append("  quit (exit the program)\n");
   }
@@ -187,8 +189,8 @@ public class MacroSpreadSheetController extends SpreadSheetController {
       BulkAssignMacro macro = new BulkAssignMacro(fromRowIndex, fromCol, toRowIndex, toCol, value);
       macro.execute(macroSheet);
 
-      output.append(String.format("Setting cells from (%d,%d) to (%d,%d) to %.1f\n", 
-          fromRowIndex, fromCol, toRowIndex, toCol, value));
+      output.append(String.format("Setting cells from (%d,%d) to (%d,%d) to %.1f\n",
+              fromRowIndex, fromCol, toRowIndex, toCol, value));
     } catch (NumberFormatException e) {
       throw new IllegalArgumentException("Error: Invalid number format");
     }
@@ -196,9 +198,10 @@ public class MacroSpreadSheetController extends SpreadSheetController {
 
   private void handleRangeAssign(String[] tokens) throws IOException {
     if (tokens.length != 7) {
-      throw new IllegalArgumentException("Invalid command format. Use: range-assign FROM_ROW FROM_COL TO_ROW TO_COL START_VALUE INCREMENT");
+      throw new IllegalArgumentException("Invalid command format. Use: range-assign "
+              + "FROM_ROW FROM_COL TO_ROW TO_COL START_VALUE INCREMENT");
     }
-    
+
     try {
       int fromRow = convertRowToIndex(tokens[1]);
       int fromCol = Integer.parseInt(tokens[2]) - 1;
@@ -206,19 +209,20 @@ public class MacroSpreadSheetController extends SpreadSheetController {
       int toCol = Integer.parseInt(tokens[4]) - 1;
       double startValue = Double.parseDouble(tokens[5]);
       double increment = Double.parseDouble(tokens[6]);
-      
+
       if (fromRow < 0 || toRow < 0) {
         throw new IllegalArgumentException("Invalid row reference");
       }
       if (fromCol < 0 || toCol < 0) {
         throw new IllegalArgumentException("Invalid column reference");
       }
-      
-      RangeAssignMacro macro = new RangeAssignMacro(fromRow, fromCol, toRow, toCol, startValue, increment);
+
+      RangeAssignMacro macro = new RangeAssignMacro(fromRow, fromCol, toRow, toCol,
+              startValue, increment);
       macroSheet.executeMacro(macro);
-      output.append("Setting cells from (" + fromRow + "," + fromCol + ") to (" + 
-                    toRow + "," + toCol + ") starting at " + startValue + 
-                    " with increment " + increment + "\n");
+      output.append("Setting cells from (" + fromRow + "," + fromCol + ") to (" +
+              toRow + "," + toCol + ") starting at " + startValue +
+              " with increment " + increment + "\n");
     } catch (NumberFormatException e) {
       throw new IllegalArgumentException("Invalid number format");
     }
@@ -226,9 +230,10 @@ public class MacroSpreadSheetController extends SpreadSheetController {
 
   private void handleAverage(String[] tokens) throws IOException {
     if (tokens.length != 7) {
-      throw new IllegalArgumentException("Invalid command format. Use: average FROM_ROW FROM_COL TO_ROW TO_COL DEST_ROW DEST_COL");
+      throw new IllegalArgumentException("Invalid command format. Use: "
+              + "average FROM_ROW FROM_COL TO_ROW TO_COL DEST_ROW DEST_COL");
     }
-    
+
     try {
       int fromRow = convertRowToIndex(tokens[1]);
       int fromCol = Integer.parseInt(tokens[2]) - 1;
@@ -236,19 +241,19 @@ public class MacroSpreadSheetController extends SpreadSheetController {
       int toCol = Integer.parseInt(tokens[4]) - 1;
       int destRow = convertRowToIndex(tokens[5]);
       int destCol = Integer.parseInt(tokens[6]) - 1;
-      
+
       if (fromRow < 0 || toRow < 0 || destRow < 0) {
         throw new IllegalArgumentException("Invalid row reference");
       }
       if (fromCol < 0 || toCol < 0 || destCol < 0) {
         throw new IllegalArgumentException("Invalid column reference");
       }
-      
+
       AverageMacro macro = new AverageMacro(fromRow, fromCol, toRow, toCol, destRow, destCol);
       macroSheet.executeMacro(macro);
-      output.append("Computing average of cells from (" + fromRow + "," + fromCol + ") to (" + 
-                    toRow + "," + toCol + ") and storing in (" + 
-                    destRow + "," + destCol + ")\n");
+      output.append("Computing average of cells from (" + fromRow + "," + fromCol + ") to (" +
+              toRow + "," + toCol + ") and storing in (" +
+              destRow + "," + destCol + ")\n");
     } catch (NumberFormatException e) {
       throw new IllegalArgumentException("Invalid number format");
     }
