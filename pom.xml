@@ -19,11 +19,13 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.1</version>
-            <scope>src/test</scope>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
+        <sourceDirectory>src/spreadsheet</sourceDirectory>
+        <testSourceDirectory>test</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.pitest</groupId>
