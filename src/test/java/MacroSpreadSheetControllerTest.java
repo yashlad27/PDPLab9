@@ -3,8 +3,6 @@ import org.junit.Test;
 import java.io.StringReader;
 
 import spreadsheet.MacroSpreadSheetController;
-import spreadsheet.SparseSpreadSheet;
-import spreadsheet.SpreadSheet;
 import spreadsheet.SpreadSheetWithMacro;
 import spreadsheet.SpreadSheetWithMacroImpl;
 
@@ -28,8 +26,7 @@ public class MacroSpreadSheetControllerTest {
     // Set up controller and run test
     Readable in = new StringReader(input.toString());
     StringBuilder out = new StringBuilder();
-    SpreadSheet baseSheet = new SparseSpreadSheet();
-    SpreadSheetWithMacro model = new SpreadSheetWithMacroImpl(baseSheet);
+    SpreadSheetWithMacro model = new SpreadSheetWithMacroImpl();
     MacroSpreadSheetController controller = new MacroSpreadSheetController(model, in, out);
 
     controller.control();
@@ -51,8 +48,7 @@ public class MacroSpreadSheetControllerTest {
     // Set up controller and run test
     Readable in = new StringReader(input.toString());
     StringBuilder out = new StringBuilder();
-    SpreadSheet baseSheet = new SparseSpreadSheet();
-    SpreadSheetWithMacro model = new SpreadSheetWithMacroImpl(baseSheet);
+    SpreadSheetWithMacro model = new SpreadSheetWithMacroImpl();
     MacroSpreadSheetController controller = new MacroSpreadSheetController(model, in, out);
 
     controller.control();
@@ -72,8 +68,7 @@ public class MacroSpreadSheetControllerTest {
     // Set up controller and run test
     Readable in = new StringReader(input.toString());
     StringBuilder out = new StringBuilder();
-    SpreadSheet baseSheet = new SparseSpreadSheet();
-    SpreadSheetWithMacro model = new SpreadSheetWithMacroImpl(baseSheet);
+    SpreadSheetWithMacro model = new SpreadSheetWithMacroImpl();
     MacroSpreadSheetController controller = new MacroSpreadSheetController(model, in, out);
 
     controller.control();

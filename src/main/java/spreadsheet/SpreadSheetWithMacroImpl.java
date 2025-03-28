@@ -9,6 +9,13 @@ public class SpreadSheetWithMacroImpl implements SpreadSheetWithMacro {
   private final SpreadSheet sheet;
 
   /**
+   * Constructs a new SpreadSheetWithMacroImpl with a default SparseSpreadSheet.
+   */
+  public SpreadSheetWithMacroImpl() {
+    this.sheet = new SparseSpreadSheet();
+  }
+
+  /**
    * Constructs a new SpreadSheetWithMacroImpl that wraps an existing spreadsheet.
    * This implementation uses composition to add macro functionality to
    * any SpreadSheet implementation.

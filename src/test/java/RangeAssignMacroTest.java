@@ -24,12 +24,10 @@ public class RangeAssignMacroTest {
 
   @Test
   public void testHorizontalRange() {
-    // Create a macro to assign values 1, 2, 3, 4, 5 to a row
     SpreadSheetMacro macro = new RangeAssignMacro(0, 0, 0, 4,
             1.0, 1.0);
     sheet.executeMacro(macro);
 
-    // Verify the cells have the expected values
     for (int col = 0; col <= 4; col++) {
       assertEquals(col + 1.0, sheet.get(0, col), 0.001);
     }
@@ -37,12 +35,10 @@ public class RangeAssignMacroTest {
 
   @Test
   public void testVerticalRange() {
-    // Create a macro to assign values 10, 20, 30 to a column
     SpreadSheetMacro macro = new RangeAssignMacro(0, 0, 2, 0,
             10.0, 10.0);
     sheet.executeMacro(macro);
 
-    // Verify the cells have the expected values
     for (int row = 0; row <= 2; row++) {
       assertEquals((row + 1) * 10.0, sheet.get(row, 0), 0.001);
     }

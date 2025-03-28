@@ -49,7 +49,7 @@ public class SpreadSheetController {
    *
    * @throws IllegalStateException if the controller is unable to transmit output
    */
-  public void control() throws IllegalStateException {
+  public void control() throws IllegalStateException, IOException {
     Scanner sc = new Scanner(readable);
     boolean quit = false;
 
@@ -69,7 +69,7 @@ public class SpreadSheetController {
     this.farewellMessage();
   }
 
-  protected void processCommand(String userInstruction, Scanner sc, SpreadSheet sheet) {
+  protected void processCommand(String userInstruction, Scanner sc, SpreadSheet sheet) throws IOException {
     int row;
     int col;
     double value;
@@ -126,7 +126,7 @@ public class SpreadSheetController {
     }
   }
 
-  protected void printMenu() throws IllegalStateException {
+  protected void printMenu() throws IllegalStateException, IOException {
     writeMessage("Supported user instructions are: " + System.lineSeparator());
     writeMessage("assign-value row-num col-num value (set a cell to a value)"
             + System.lineSeparator());
@@ -136,7 +136,7 @@ public class SpreadSheetController {
     writeMessage("q or quit (quit the program) " + System.lineSeparator());
   }
 
-  protected void welcomeMessage() throws IllegalStateException {
+  protected void welcomeMessage() throws IllegalStateException, IOException {
     writeMessage("Welcome to the spreadsheet program!" + System.lineSeparator());
     printMenu();
   }

@@ -24,20 +24,15 @@ public class BulkAssignMacroTest {
 
   @Test
   public void testValidBulkAssign() {
-    // Create a macro to set a 2x3 range to the value 42
     SpreadSheetMacro macro = new BulkAssignMacro(0, 0, 1, 2, 42.0);
 
-    // Execute the macro
     sheet.executeMacro(macro);
 
-    // Verify the cells have the expected values
     for (int row = 0; row <= 1; row++) {
       for (int col = 0; col <= 2; col++) {
         assertEquals(42.0, sheet.get(row, col), 0.001);
       }
     }
-
-    // Verify surrounding cells are still 0
     assertEquals(0.0, sheet.get(0, 3), 0.001);
     assertEquals(0.0, sheet.get(2, 0), 0.001);
   }

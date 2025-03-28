@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import java.io.IOException;
 import java.io.StringReader;
 
 import spreadsheet.SparseSpreadSheet;
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class SpreadSheetControllerTest {
 
   @Test
-  public void testAssignValue() {
+  public void testAssignValue() throws IOException {
     StringBuilder sb = new StringBuilder();
     StringBuilder expected = new StringBuilder();
     expected.append("Welcome to the spreadsheet program!" + System.lineSeparator()
@@ -53,7 +54,7 @@ public class SpreadSheetControllerTest {
   }
 
   @Test
-  public void testEmptyInput() {
+  public void testEmptyInput() throws IOException {
     StringBuilder sb = new StringBuilder();
     StringBuilder expected = new StringBuilder();
     expected.append("Welcome to the spreadsheet program!" + System.lineSeparator()
@@ -78,7 +79,7 @@ public class SpreadSheetControllerTest {
   }
 
   @Test
-  public void testMenuCommand() {
+  public void testMenuCommand() throws IOException {
     StringBuilder sb = new StringBuilder();
     StringBuilder expected = new StringBuilder();
     expected.append("Welcome to the spreadsheet program!" + System.lineSeparator()
@@ -112,7 +113,7 @@ public class SpreadSheetControllerTest {
   }
 
   @Test
-  public void testInvalidInputFormat() {
+  public void testInvalidInputFormat() throws IOException {
     StringBuilder sb = new StringBuilder();
     StringBuilder expected = new StringBuilder();
     expected.append("Welcome to the spreadsheet program!" + System.lineSeparator()
@@ -139,7 +140,7 @@ public class SpreadSheetControllerTest {
   }
 
   @Test
-  public void testMalformedCommands() {
+  public void testMalformedCommands() throws IOException {
     StringBuilder sb = new StringBuilder();
     StringBuilder expected = new StringBuilder();
     expected.append("Welcome to the spreadsheet program!" + System.lineSeparator()

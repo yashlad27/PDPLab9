@@ -63,7 +63,7 @@ public class AverageMacro implements SpreadSheetMacro {
       }
     }
 
-    double average = (count > 0) ? sum / count : 0.0;
+    double average = count > 0 ? sum / count : 0.0;
     sheet.set(destRow, destCol, average);
   }
 }
