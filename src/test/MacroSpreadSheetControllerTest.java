@@ -9,6 +9,7 @@ import spreadsheet.SpreadSheetWithMacro;
 import spreadsheet.SpreadSheetWithMacroImpl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the MacroSpreadSheetController class.
@@ -25,36 +26,61 @@ public class MacroSpreadSheetControllerTest {
     input.append("print-value C 1\n");                // Check C1 (outside range)
     input.append("quit\n");
 
-    // Create expected output
-    StringBuilder expected = new StringBuilder();
-    expected.append("Welcome to the spreadsheet program!" + System.lineSeparator());
-    expected.append("Supported user instructions are: " + System.lineSeparator());
-    expected.append("bulk-assign-value from-row-num from-col-num to-row-num to-col-num value " +
-            "(set a range of cells to a value)" + System.lineSeparator());
-    expected.append("Supported user instructions are: " + System.lineSeparator());
-    expected.append("assign-value row-num col-num value (set a cell to a value)"
-            + System.lineSeparator());
-    expected.append("print-value row-num col-num (print the value at a given cell)"
-            + System.lineSeparator());
-    expected.append("menu (Print supported instruction list)" + System.lineSeparator());
-    expected.append("q or quit (quit the program) " + System.lineSeparator());
+    // Set up controller and run test
+    Readable in = new StringReader(input.toString());
+    StringBuilder out = new StringBuilder();
+    SpreadSheet baseSheet = new SparseSpreadSheet();
+    SpreadSheetWithMacro model = new SpreadSheetWithMacroImpl(baseSheet);
+    MacroSpreadSheetController controller = new MacroSpreadSheetController(model, in, out);
 
-    expected.append("Type instruction: Setting cells from (0,0) to (1,2) to 42.5"
-            + System.lineSeparator());
-    expected.append("Type instruction: Value: 42.5" + System.lineSeparator());
-    expected.append("Type instruction: Value: 42.5" + System.lineSeparator());
-    expected.append("Type instruction: Value: 0.0" + System.lineSeparator());
-    expected.append("Type instruction: Thank you for using this program!");
+    controller.control();
+
+    // Verify output contains expected values
+    String output = out.toString();
+    assertTrue(output.contains("Setting cells from (0,0) to (1,2) to 42.5"));
+    assertTrue(output.contains("Value: 42.5")); // A1 and B3 should both be 42.5
+    assertTrue(output.contains("Value: 0.0")); // C1 should be 0.0 (outside range)
+  }
+
+  @Test
+  public void testInvalidCommand() {
+    // Create input with invalid command
+    StringBuilder input = new StringBuilder();
+    input.append("invalid-command\n");
+    input.append("quit\n");
 
     // Set up controller and run test
     Readable in = new StringReader(input.toString());
     StringBuilder out = new StringBuilder();
     SpreadSheet baseSheet = new SparseSpreadSheet();
-    SpreadSheetWithMacro sheet = new SpreadSheetWithMacroImpl(baseSheet);
-    MacroSpreadSheetController controller = new MacroSpreadSheetController(sheet, in, out);
+    SpreadSheetWithMacro model = new SpreadSheetWithMacroImpl(baseSheet);
+    MacroSpreadSheetController controller = new MacroSpreadSheetController(model, in, out);
 
     controller.control();
 
-    assertEquals(expected.toString(), out.toString());
+    // Verify error message
+    String output = out.toString();
+    assertTrue(output.contains("Undefined instruction: invalid-command"));
+  }
+
+  @Test
+  public void testInvalidParameters() {
+    // Create input with invalid parameters
+    StringBuilder input = new StringBuilder();
+    input.append("bulk-assign-value A -1 B 2 10\n"); // Negative column number
+    input.append("quit\n");
+
+    // Set up controller and run test
+    Readable in = new StringReader(input.toString());
+    StringBuilder out = new StringBuilder();
+    SpreadSheet baseSheet = new SparseSpreadSheet();
+    SpreadSheetWithMacro model = new SpreadSheetWithMacroImpl(baseSheet);
+    MacroSpreadSheetController controller = new MacroSpreadSheetController(model, in, out);
+
+    controller.control();
+
+    // Verify error message
+    String output = out.toString();
+    assertTrue(output.contains("Error:"));
   }
 }

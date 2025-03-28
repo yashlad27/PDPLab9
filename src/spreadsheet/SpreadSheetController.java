@@ -30,8 +30,9 @@ public class SpreadSheetController {
   /**
    * Create a controller to work with the specified sheet (model),
    * readable (to take inputs) and appendable (to transmit output).
-   * @param sheet the sheet to work with (the model)
-   * @param readable the Readable object for inputs
+   *
+   * @param sheet      the sheet to work with (the model)
+   * @param readable   the Readable object for inputs
    * @param appendable the Appendable objects to transmit any output
    */
   public SpreadSheetController(SpreadSheet sheet, Readable readable, Appendable appendable) {
@@ -45,6 +46,7 @@ public class SpreadSheetController {
 
   /**
    * The main method that relinquishes control of the application to the controller.
+   *
    * @throws IllegalStateException if the controller is unable to transmit output
    */
   public void control() throws IllegalStateException {
@@ -52,7 +54,6 @@ public class SpreadSheetController {
     boolean quit = false;
 
 
-    //print the welcome message
     this.welcomeMessage();
 
     while (!quit && sc.hasNext()) { //continue until the user quits
@@ -60,15 +61,12 @@ public class SpreadSheetController {
       String userInstruction = sc.next(); //take an instruction name
       if (userInstruction.equals("quit") || userInstruction.equals("q")) {
         quit = true;
-      }
-      else {
-        processCommand(userInstruction, sc,sheet);
+      } else {
+        processCommand(userInstruction, sc, sheet);
       }
     }
 
-    //after the user has quit, print farewell message
     this.farewellMessage();
-
   }
 
   protected void processCommand(String userInstruction, Scanner sc, SpreadSheet sheet) {
@@ -105,7 +103,6 @@ public class SpreadSheetController {
     }
   }
 
-  //converts a row string into a row number starting with 0
   protected int getRowNum(String rowLetters) throws IllegalArgumentException {
     int rownumber = 0;
 

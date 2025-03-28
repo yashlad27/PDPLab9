@@ -69,7 +69,8 @@ public class MacroSpreadSheetController extends SpreadSheetController {
           destCol = sc.nextInt() - 1; // Convert to 0-indexed
 
           writeMessage("Computing average of cells from (" + fromRow + "," + fromCol
-                  + ") to (" + toRow + "," + toCol + ") and storing in (" + destRow + "," + destCol + ")"
+                  + ") to (" + toRow + "," + toCol + ") and storing in (" + destRow
+                  + "," + destCol + ")"
                   + System.lineSeparator());
 
           AverageMacro macro = new AverageMacro(fromRow, fromCol, toRow, toCol, destRow, destCol);
@@ -92,7 +93,8 @@ public class MacroSpreadSheetController extends SpreadSheetController {
                   + ") to (" + toRow + "," + toCol + ") starting at " + startValue
                   + " with increment " + increment + System.lineSeparator());
 
-          RangeAssignMacro macro = new RangeAssignMacro(fromRow, fromCol, toRow, toCol, startValue, increment);
+          RangeAssignMacro macro = new RangeAssignMacro(fromRow, fromCol, toRow, toCol,
+                  startValue, increment);
           macroSheet.executeMacro(macro);
         } catch (IllegalArgumentException e) {
           writeMessage("Error: " + e.getMessage() + System.lineSeparator());

@@ -25,7 +25,8 @@ public class RangeAssignMacroTest {
   @Test
   public void testHorizontalRange() {
     // Create a macro to assign values 1, 2, 3, 4, 5 to a row
-    SpreadSheetMacro macro = new RangeAssignMacro(0, 0, 0, 4, 1.0, 1.0);
+    SpreadSheetMacro macro = new RangeAssignMacro(0, 0, 0, 4,
+            1.0, 1.0);
     sheet.executeMacro(macro);
 
     // Verify the cells have the expected values
@@ -37,7 +38,8 @@ public class RangeAssignMacroTest {
   @Test
   public void testVerticalRange() {
     // Create a macro to assign values 10, 20, 30 to a column
-    SpreadSheetMacro macro = new RangeAssignMacro(0, 0, 2, 0, 10.0, 10.0);
+    SpreadSheetMacro macro = new RangeAssignMacro(0, 0, 2, 0,
+            10.0, 10.0);
     sheet.executeMacro(macro);
 
     // Verify the cells have the expected values
@@ -51,7 +53,8 @@ public class RangeAssignMacroTest {
     // Create a macro to assign sequential values to a 2x3 grid
     // Values should be: 5, 6, 7
     //                  8, 9, 10
-    SpreadSheetMacro macro = new RangeAssignMacro(0, 0, 1, 2, 5.0, 1.0);
+    SpreadSheetMacro macro = new RangeAssignMacro(0, 0, 1,
+            2, 5.0, 1.0);
     sheet.executeMacro(macro);
 
     // Verify the first row
@@ -68,7 +71,8 @@ public class RangeAssignMacroTest {
   @Test
   public void testNegativeIncrement() {
     // Create a macro to assign values 10, 8, 6, 4, 2 to a row
-    SpreadSheetMacro macro = new RangeAssignMacro(0, 0, 0, 4, 10.0, -2.0);
+    SpreadSheetMacro macro = new RangeAssignMacro(0, 0, 0, 4,
+            10.0, -2.0);
     sheet.executeMacro(macro);
 
     // Verify the cells have the expected values
@@ -80,7 +84,8 @@ public class RangeAssignMacroTest {
   @Test
   public void testFloatingPointIncrement() {
     // Create a macro to assign values with a floating-point increment
-    SpreadSheetMacro macro = new RangeAssignMacro(0, 0, 0, 4, 1.0, 0.5);
+    SpreadSheetMacro macro = new RangeAssignMacro(0, 0, 0, 4,
+            1.0, 0.5);
     sheet.executeMacro(macro);
 
     // Verify the cells have the expected values
@@ -92,7 +97,8 @@ public class RangeAssignMacroTest {
   @Test
   public void testSingleCell() {
     // Create a macro for a single cell
-    SpreadSheetMacro macro = new RangeAssignMacro(1, 1, 1, 1, 42.0, 5.0);
+    SpreadSheetMacro macro = new RangeAssignMacro(1, 1, 1, 1,
+            42.0, 5.0);
     sheet.executeMacro(macro);
 
     // Verify the cell has the expected value
@@ -102,7 +108,8 @@ public class RangeAssignMacroTest {
   @Test
   public void testZeroIncrement() {
     // Create a macro with zero increment (all cells get the same value)
-    SpreadSheetMacro macro = new RangeAssignMacro(0, 0, 1, 1, 7.0, 0.0);
+    SpreadSheetMacro macro = new RangeAssignMacro(0, 0, 1, 1,
+            7.0, 0.0);
     sheet.executeMacro(macro);
 
     // Verify all cells have the same value
@@ -144,7 +151,8 @@ public class RangeAssignMacroTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testNullSheet() {
-    SpreadSheetMacro macro = new RangeAssignMacro(0, 0, 1, 1, 1.0, 1.0);
+    SpreadSheetMacro macro = new RangeAssignMacro(0, 0, 1, 1,
+            1.0, 1.0);
     macro.execute(null);
   }
 }

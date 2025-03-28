@@ -8,6 +8,14 @@ public class SpreadSheetWithMacroImpl implements SpreadSheetWithMacro {
 
   private final SpreadSheet sheet;
 
+  /**
+   * Constructs a new SpreadSheetWithMacroImpl that wraps an existing spreadsheet.
+   * This implementation uses composition to add macro functionality to
+   * any SpreadSheet implementation.
+   *
+   * @param sheet the base spreadsheet to be enhanced with macro capabilities
+   * @throws IllegalArgumentException if the provided sheet is null
+   */
   public SpreadSheetWithMacroImpl(SpreadSheet sheet) throws IllegalArgumentException {
     if (sheet == null) {
       throw new IllegalArgumentException("Sheet cannot be null");

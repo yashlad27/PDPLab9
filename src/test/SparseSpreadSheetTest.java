@@ -76,5 +76,49 @@ public class SparseSpreadSheetTest {
     sheet.get(0, -1);
   }
 
+  @Test
+  public void testIsEmptyEdgeCases() {
+    // Test isEmpty after setting and then getting a value
+    sheet.set(0, 0, 42.0);
+    assertFalse(sheet.isEmpty(0, 0));
+    
+    // Test isEmpty after setting a value to 0
+    sheet.set(1, 1, 0.0);
+    assertFalse(sheet.isEmpty(1, 1));
+    
+    // Test isEmpty for unset cell
+    assertTrue(sheet.isEmpty(2, 2));
+    
+    // Test isEmpty after setting and overwriting with same value
+    sheet.set(3, 3, 10.0);
+    sheet.set(3, 3, 10.0);
+    assertFalse(sheet.isEmpty(3, 3));
+  }
 
+  @Test
+  public void testGetWidthHeightEdgeCases() {
+    // Test initial width and height
+    assertEquals(0, sheet.getWidth());
+    assertEquals(0, sheet.getHeight());
+    
+    // Test width/height after setting non-zero value
+    sheet.set(5, 5, 42.0);
+    assertEquals(6, sheet.getWidth());
+    assertEquals(6, sheet.getHeight());
+    
+    // Test width/height after setting zero value
+    sheet.set(7, 7, 0.0);
+    assertEquals(8, sheet.getWidth());
+    assertEquals(8, sheet.getHeight());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testIsEmptyWithNegativeCol() {
+    sheet.isEmpty(0, -1);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSetWithNegativeCol() {
+    sheet.set(0, -1, 42.0);
+  }
 }
