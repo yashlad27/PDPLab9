@@ -1,11 +1,12 @@
 import org.junit.Before;
 import org.junit.Test;
+
 import spreadsheet.BulkAssignMacro;
+import spreadsheet.SparseSpreadSheet;
 import spreadsheet.SpreadSheet;
 import spreadsheet.SpreadSheetMacro;
 import spreadsheet.SpreadSheetWithMacro;
 import spreadsheet.SpreadSheetWithMacroImpl;
-import spreadsheet.SparseSpreadSheet;
 
 import static org.junit.Assert.assertEquals;
 

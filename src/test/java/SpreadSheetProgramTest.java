@@ -136,4 +136,108 @@ public class SpreadSheetProgramTest {
     String output = outContent.toString();
     assertTrue(output.contains("Error: Invalid row"));
   }
+
+  @Test
+  public void testEmptyInput() {
+    String input = "\nquit\n";
+    ByteArrayInputStream inContent = new ByteArrayInputStream(input.getBytes());
+    System.setIn(inContent);
+
+    spreadsheet.SpreadSheetProgram.main(new String[]{});
+
+    String output = outContent.toString();
+    assertTrue(output.contains("Welcome to the spreadsheet program!"));
+    assertTrue(output.contains("Thank you for using this program!"));
+  }
+
+  @Test
+  public void testMalformedNumericValue() {
+    String input = "invalid-command\nquit\n";
+    ByteArrayInputStream inContent = new ByteArrayInputStream(input.getBytes());
+    System.setIn(inContent);
+
+    spreadsheet.SpreadSheetProgram.main(new String[]{});
+
+    String output = outContent.toString();
+    assertTrue(output.contains("Welcome to the spreadsheet program!"));
+    assertTrue(output.contains("Undefined instruction: invalid-command"));
+    assertTrue(output.contains("Thank you for using this program!"));
+  }
+
+  @Test
+  public void testOutOfBoundsCellReference() {
+    String input = "assign-value A 999999 42.5\nquit\n";
+    ByteArrayInputStream inContent = new ByteArrayInputStream(input.getBytes());
+    System.setIn(inContent);
+
+    spreadsheet.SpreadSheetProgram.main(new String[]{});
+
+    String output = outContent.toString();
+    assertTrue(output.contains("Welcome to the spreadsheet program!"));
+    assertTrue(output.contains("Setting cell (0,999998"));
+    assertTrue(output.contains("Thank you for using this program!"));
+  }
+
+  @Test
+  public void testMultipleOperationsInSequence() {
+    String input = "assign-value A 1 10.0\n" +
+            "assign-value B 1 20.0\n" +
+            "average A 1 B 1 C 1\n" +
+            "print-value C 1\n" +
+            "range-assign A 1 A 3 1.0 1.0\n" +
+            "print-value A 2\n" +
+            "quit\n";
+    ByteArrayInputStream inContent = new ByteArrayInputStream(input.getBytes());
+    System.setIn(inContent);
+
+    spreadsheet.SpreadSheetProgram.main(new String[]{});
+
+    String output = outContent.toString();
+    assertTrue(output.contains("Value: 15.0"));
+    assertTrue(output.contains("Value: 2.0"));
+  }
+
+  @Test
+  public void testWhitespaceHandling() {
+    String input = "  assign-value  A  1  42.5  \n" +
+            "  print-value  A  1  \n" +
+            "quit\n";
+    ByteArrayInputStream inContent = new ByteArrayInputStream(input.getBytes());
+    System.setIn(inContent);
+
+    spreadsheet.SpreadSheetProgram.main(new String[]{});
+
+    String output = outContent.toString();
+    assertTrue(output.contains("Value: 42.5"));
+  }
+
+  @Test
+  public void testCaseSensitivity() {
+    String input = "ASSIGN-VALUE A 1 42.5\nprint-value A 1\nquit\n";
+    ByteArrayInputStream inContent = new ByteArrayInputStream(input.getBytes());
+    System.setIn(inContent);
+
+    spreadsheet.SpreadSheetProgram.main(new String[]{});
+
+    String output = outContent.toString();
+    assertTrue(output.contains("Welcome to the spreadsheet program!"));
+    assertTrue(output.contains("Undefined instruction: ASSIGN-VALUE"));
+    assertTrue(output.contains("Thank you for using this program!"));
+  }
+
+  @Test
+  public void testErrorRecovery() {
+    String input = "invalid-command\nassign-value A 1 42.5\nprint-value A 1\nquit\n";
+    ByteArrayInputStream inContent = new ByteArrayInputStream(input.getBytes());
+    System.setIn(inContent);
+
+    spreadsheet.SpreadSheetProgram.main(new String[]{});
+
+    String output = outContent.toString();
+    assertTrue(output.contains("Welcome to the spreadsheet program!"));
+    assertTrue(output.contains("Undefined instruction: invalid-command"));
+    assertTrue(output.contains("Setting cell (0,0"));
+    assertTrue(output.contains("Value: 42.5"));
+    assertTrue(output.contains("Thank you for using this program!"));
+  }
 } 

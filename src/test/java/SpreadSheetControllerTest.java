@@ -51,4 +51,117 @@ public class SpreadSheetControllerTest {
     assertEquals(expected.toString(), output.toString());
 
   }
+
+  @Test
+  public void testEmptyInput() {
+    StringBuilder sb = new StringBuilder();
+    StringBuilder expected = new StringBuilder();
+    expected.append("Welcome to the spreadsheet program!" + System.lineSeparator()
+            + "Supported user instructions are: " + System.lineSeparator()
+            + "assign-value row-num col-num value (set a cell to a value)"
+            + System.lineSeparator()
+            + "print-value row-num col-num (print the value at a given cell)"
+            + System.lineSeparator()
+            + "menu (Print supported instruction list)" + System.lineSeparator()
+            + "q or quit (quit the program) " + System.lineSeparator());
+
+    sb.append("quit\n");
+    expected.append("Type instruction: ");
+    expected.append("Thank you for using this program!");
+
+    Readable input = new StringReader(sb.toString());
+    Appendable output = new StringBuilder();
+    SpreadSheet model = new SparseSpreadSheet();
+    SpreadSheetController c = new SpreadSheetController(model, input, output);
+    c.control();
+    assertEquals(expected.toString(), output.toString());
+  }
+
+  @Test
+  public void testMenuCommand() {
+    StringBuilder sb = new StringBuilder();
+    StringBuilder expected = new StringBuilder();
+    expected.append("Welcome to the spreadsheet program!" + System.lineSeparator()
+            + "Supported user instructions are: " + System.lineSeparator()
+            + "assign-value row-num col-num value (set a cell to a value)"
+            + System.lineSeparator()
+            + "print-value row-num col-num (print the value at a given cell)"
+            + System.lineSeparator()
+            + "menu (Print supported instruction list)" + System.lineSeparator()
+            + "q or quit (quit the program) " + System.lineSeparator());
+
+    sb.append("menu\nquit\n");
+    expected.append("Type instruction: ");
+    expected.append("Welcome to the spreadsheet program!" + System.lineSeparator()
+            + "Supported user instructions are: " + System.lineSeparator()
+            + "assign-value row-num col-num value (set a cell to a value)"
+            + System.lineSeparator()
+            + "print-value row-num col-num (print the value at a given cell)"
+            + System.lineSeparator()
+            + "menu (Print supported instruction list)" + System.lineSeparator()
+            + "q or quit (quit the program) " + System.lineSeparator());
+    expected.append("Type instruction: ");
+    expected.append("Thank you for using this program!");
+
+    Readable input = new StringReader(sb.toString());
+    Appendable output = new StringBuilder();
+    SpreadSheet model = new SparseSpreadSheet();
+    SpreadSheetController c = new SpreadSheetController(model, input, output);
+    c.control();
+    assertEquals(expected.toString(), output.toString());
+  }
+
+  @Test
+  public void testInvalidInputFormat() {
+    StringBuilder sb = new StringBuilder();
+    StringBuilder expected = new StringBuilder();
+    expected.append("Welcome to the spreadsheet program!" + System.lineSeparator()
+            + "Supported user instructions are: " + System.lineSeparator()
+            + "assign-value row-num col-num value (set a cell to a value)"
+            + System.lineSeparator()
+            + "print-value row-num col-num (print the value at a given cell)"
+            + System.lineSeparator()
+            + "menu (Print supported instruction list)" + System.lineSeparator()
+            + "q or quit (quit the program) " + System.lineSeparator());
+
+    sb.append("invalid-command\nquit\n");
+    expected.append("Type instruction: ");
+    expected.append("Undefined instruction: invalid-command" + System.lineSeparator());
+    expected.append("Type instruction: ");
+    expected.append("Thank you for using this program!");
+
+    Readable input = new StringReader(sb.toString());
+    Appendable output = new StringBuilder();
+    SpreadSheet model = new SparseSpreadSheet();
+    SpreadSheetController c = new SpreadSheetController(model, input, output);
+    c.control();
+    assertEquals(expected.toString(), output.toString());
+  }
+
+  @Test
+  public void testMalformedCommands() {
+    StringBuilder sb = new StringBuilder();
+    StringBuilder expected = new StringBuilder();
+    expected.append("Welcome to the spreadsheet program!" + System.lineSeparator()
+            + "Supported user instructions are: " + System.lineSeparator()
+            + "assign-value row-num col-num value (set a cell to a value)"
+            + System.lineSeparator()
+            + "print-value row-num col-num (print the value at a given cell)"
+            + System.lineSeparator()
+            + "menu (Print supported instruction list)" + System.lineSeparator()
+            + "q or quit (quit the program) " + System.lineSeparator());
+
+    sb.append("invalid-command\nquit\n");
+    expected.append("Type instruction: ");
+    expected.append("Undefined instruction: invalid-command" + System.lineSeparator());
+    expected.append("Type instruction: ");
+    expected.append("Thank you for using this program!");
+
+    Readable input = new StringReader(sb.toString());
+    Appendable output = new StringBuilder();
+    SpreadSheet model = new SparseSpreadSheet();
+    SpreadSheetController c = new SpreadSheetController(model, input, output);
+    c.control();
+    assertEquals(expected.toString(), output.toString());
+  }
 }

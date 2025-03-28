@@ -34,6 +34,11 @@ public class AverageMacro implements SpreadSheetMacro {
               + "be <= ending indices");
     }
 
+    // Check if destination cell overlaps with source range
+    if (destRow >= fromRow && destRow <= toRow && destCol >= fromCol && destCol <= toCol) {
+      throw new IllegalArgumentException("Destination cell cannot overlap with source range");
+    }
+
     this.fromRow = fromRow;
     this.fromCol = fromCol;
     this.toRow = toRow;
